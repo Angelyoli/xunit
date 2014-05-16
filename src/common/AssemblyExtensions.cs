@@ -6,6 +6,9 @@ internal static class AssemblyExtensions
 {
     public static string GetLocalCodeBase(this Assembly assembly)
     {
+#if K10
+        return null;
+#else
         if (string.IsNullOrEmpty(assembly.Location))
             return null;
 
@@ -21,6 +24,7 @@ internal static class AssemblyExtensions
             return "/" + codeBase;
 
         return codeBase.Replace('/', Path.DirectorySeparatorChar);
+#endif
     }
 }
 

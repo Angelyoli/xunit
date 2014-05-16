@@ -1,24 +1,16 @@
 ﻿using System;
+using Xunit.Abstractions;
+#if !K10
 using System.Runtime.Serialization;
 using System.Security;
-using Xunit.Abstractions;
+#endif
 
 namespace Xunit.Sdk
 {
-    /// <summary>
-    /// The implementation of <see cref="ITestCollection"/> that is used by xUnit.net v2.
-    /// </summary>
+#if !K10
     [Serializable]
-    public class XunitTestCollection : LongLivedMarshalByRefObject, ITestCollection, ISerializable
+    partial class XunitTestCollection : ISerializable
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="XunitTestCollection"/> class.
-        /// </summary>
-        public XunitTestCollection()
-        {
-            ID = Guid.NewGuid();
-        }
-
         /// <inheritdoc/>
         protected XunitTestCollection(SerializationInfo info, StreamingContext context)
         {
@@ -31,15 +23,6 @@ namespace Xunit.Sdk
             if (!String.IsNullOrWhiteSpace(assemblyName) && String.IsNullOrWhiteSpace(typeName))
                 CollectionDefinition = Reflector.Wrap(Reflector.GetType(assemblyName, typeName));
         }
-
-        /// <inheritdoc/>
-        public ITypeInfo CollectionDefinition { get; set; }
-
-        /// <inheritdoc/>
-        public string DisplayName { get; set; }
-
-        /// <inheritdoc/>
-        public Guid ID { get; set; }
 
         /// <inheritdoc/>
         [SecurityCritical]
@@ -59,5 +42,29 @@ namespace Xunit.Sdk
                 info.AddValue("DeclarationTypeName", null);
             }
         }
+    }
+#endif
+
+    /// <summary>
+    /// The implementation of <see cref="ITestCollection"/> that is used by xUnit.net v2.
+    /// </summary>
+    public partial class XunitTestCollection : LongLivedMarshalByRefObject, ITestCollection
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XunitTestCollection"/> class.
+        /// </summary>
+        public XunitTestCollection()
+        {
+            ID = Guid.NewGuid();
+        }
+
+        /// <inheritdoc/>
+        public ITypeInfo CollectionDefinition { get; set; }
+
+        /// <inheritdoc/>
+        public string DisplayName { get; set; }
+
+        /// <inheritdoc/>
+        public Guid ID { get; set; }
     }
 }

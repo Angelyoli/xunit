@@ -49,9 +49,14 @@ namespace Xunit.Sdk
         {
             var testCollectionFactory = ExtensibilityPointFactory.GetXunitTestCollectionFactory(collectionBehaviorAttribute, AssemblyInfo);
 
+            Version version = null;
+#if !K10
+            version = Environment.Version;
+#endif
+
             return String.Format("{0}-bit .NET {1} [{2}, {3}{4}]",
                                  IntPtr.Size * 8,
-                                 Environment.Version,
+                                 version,
                                  testCollectionFactory.DisplayName,
                                  disableParallelization ? "non-parallel" : "parallel",
                                  maxParallelThreads > 0 ? String.Format(" (max {0} threads)", maxParallelThreads) : "");

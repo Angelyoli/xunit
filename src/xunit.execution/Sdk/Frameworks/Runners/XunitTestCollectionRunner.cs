@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Xunit.Abstractions;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Xunit.Sdk
 {

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using Xunit.Abstractions;
+using System.Reflection;
 
 namespace Xunit.Sdk
 {

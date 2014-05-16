@@ -131,7 +131,12 @@ namespace Xunit.Sdk
                     if (!String.IsNullOrEmpty(AssemblyInfo.AssemblyPath))
                         Directory.SetCurrentDirectory(Path.GetDirectoryName(AssemblyInfo.AssemblyPath));
 
-                    if (messageBus.QueueMessage(new TestAssemblyStarting(AssemblyFileName, AppDomain.CurrentDomain.SetupInformation.ConfigurationFile, DateTime.Now,
+                    string configFileName = null;
+#if !K10
+                    configFileName = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+#endif
+
+                    if (messageBus.QueueMessage(new TestAssemblyStarting(AssemblyFileName, configFileName, DateTime.Now,
                                                                          testFrameworkEnvironment, testFrameworkDisplayName)))
                     {
                         var masterStopwatch = Stopwatch.StartNew();

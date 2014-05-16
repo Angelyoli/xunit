@@ -21,3 +21,7 @@ Test*.xml
 
 Index.dat
 Storage.dat
+
+artifacts/
+*.k10.csproj
+*.net45.csproj

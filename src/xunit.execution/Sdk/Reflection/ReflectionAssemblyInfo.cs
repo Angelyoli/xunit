@@ -22,6 +22,7 @@ namespace Xunit.Sdk
             Assembly = assembly;
         }
 
+#if !K10
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionAssemblyInfo"/> class.
         /// </summary>
@@ -30,6 +31,7 @@ namespace Xunit.Sdk
         {
             Assembly = Assembly.Load(AssemblyName.GetAssemblyName(assemblyFileName));
         }
+#endif
 
         /// <inheritdoc/>
         public Assembly Assembly { get; private set; }

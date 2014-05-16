@@ -1,10 +1,26 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Xunit.Abstractions;
+#if !K10
+using System.Runtime.Serialization.Formatters.Binary;
+#endif
 
 namespace Xunit.Sdk
 {
+#if K10
+    public static class SerializationHelper
+    {
+        public static T Deserialize<T>(string serializedValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string Serialize(object value)
+        {
+            throw new NotImplementedException();
+        }
+    }
+#else
     /// <summary>
     /// Serializes and de-serializes <see cref="ITestCase"/> instances using <see cref="BinaryFormatter"/>,
     /// <see cref="Convert.ToBase64String(byte[])"/>, and <see cref="Convert.FromBase64String"/>.
@@ -30,4 +46,5 @@ namespace Xunit.Sdk
             }
         }
     }
+#endif
 }

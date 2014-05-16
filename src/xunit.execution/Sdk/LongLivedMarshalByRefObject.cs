@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
+#if !K10
 using System.Runtime.Remoting;
 using System.Security;
+#endif
 
 namespace Xunit.Sdk
 {
+#if K10
+    public abstract class LongLivedMarshalByRefObject
+    {
+        public static void DisconnectAll() { }
+    }
+#else
     /// <summary>
     /// This class inherits from <see cref="MarshalByRefObject"/> and re-implements
     /// <see cref="InitializeLifetimeService()"/> in a way that allows the object to live
@@ -41,4 +49,5 @@ namespace Xunit.Sdk
             remoteObjects = new ConcurrentBag<MarshalByRefObject>();
         }
     }
+#endif
 }
